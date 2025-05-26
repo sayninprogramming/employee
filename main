@@ -1,0 +1,133 @@
+# employees.py
+
+class Employee:  # Çalışan sınıfı tanımlanıyor.
+    """
+    Genel bir çalışanı temsil eder.
+    Bu sınıf ana sınıf (superclass) olacaktır. Employees sınıfının iki adet
+    private (özel) özelliği (firstName ve lastName) olacaktır[cite: 2].
+    Sınıfın uygun __init__ ve mutator (değiştirici) metotları olmalıdır[cite: 3].
+    """
+    def __init__(self, firstName, lastName):  # Yapıcı metot (constructor)
+        # __firstName ve __lastName özel (private) değişkenlerdir.
+        # Sınıf dışından doğrudan erişilemezler, isimleri Python tarafından mangling edilir (örn: _Employee__firstName).
+        self.__firstName = firstName  # Çalışanın adını saklar.
+        self.__lastName = lastName    # Çalışanın soyadını saklar.
+
+    # Accessor (Erişimci) metotlar - Özel değişkenlerin değerlerini döndürürler.
+    def get_firstName(self):  # Adı döndürür.
+        return self.__firstName
+
+    def get_lastName(self):   # Soyadı döndürür.
+        return self.__lastName
+
+    # Mutator (Değiştirici) metotlar - Özel değişkenlerin değerlerini ayarlarlar.
+    def set_firstName(self, firstName):  # Adı ayarlar.
+        self.__firstName = firstName
+
+    def set_lastName(self, lastName):    # Soyadı ayarlar.
+        self.__lastName = lastName
+
+    def print_employee(self):  # Çalışan bilgilerini yazdıran metot.
+        """
+        Çalışanın veri özelliklerini yazdırır.
+        print_employee metodunda erişimci metotları kullanın[cite: 4].
+        """
+        # Bilgileri yazdırırken get_ metotları (erişimciler) kullanılır.
+        print(f"First Name: {self.get_firstName()}")
+        print(f"Last Name: {self.get_lastName()}")
+
+class CommissionEmployee(Employee):  # CommissionEmployee sınıfı, Employee sınıfından miras alır (türer).
+    """
+    Komisyonla kazanç sağlayan bir çalışanı temsil eder.
+    Bu sınıf Employee sınıfının alt sınıfı (subclass) olacaktır.
+    CommissionEmployee sınıfının iki adet özel özelliği (commission_rate ve gross_sales) olacaktır[cite: 5].
+    Sınıfın uygun __init__, erişimci ve değiştirici metotları olmalıdır[cite: 6].
+    """
+    def __init__(self, firstName, lastName, commission_rate, gross_sales):  # Yapıcı metot.
+        super().__init__(firstName, lastName)  # Ana sınıfın (Employee) yapıcı metodunu çağırır.
+        self.__commission_rate = commission_rate  # Komisyon oranını saklar.
+        self.__gross_sales = gross_sales        # Brüt satışları saklar.
+
+    # Erişimci metotlar
+    def get_commission_rate(self):  # Komisyon oranını döndürür.
+        return self.__commission_rate
+
+    def get_gross_sales(self):      # Brüt satışları döndürür.
+        return self.__gross_sales
+
+    # Değiştirici metotlar
+    def set_commission_rate(self, commission_rate):  # Komisyon oranını ayarlar.
+        self.__commission_rate = commission_rate
+
+    def set_gross_sales(self, gross_sales):          # Brüt satışları ayarlar.
+        self.__gross_sales = gross_sales
+
+    def print_employee(self):  # Komisyonlu çalışan bilgilerini yazdıran metot.
+        """
+        Komisyonlu çalışanın veri özelliklerini yazdırır.
+        print_employee metodunda, ana sınıfın print_employee metodunu çağırın[cite: 7].
+        Ardından, CommissionEmployee sınıfının veri özelliklerini yazdırın[cite: 7].
+        print_employee metodunda erişimci metotları kullanın[cite: 8].
+        """
+        super().print_employee()  # Ana sınıfın print_employee metodunu çağırarak ad ve soyadı yazdırır.
+        # Komisyonla ilgili bilgileri yazdırırken get_ metotları kullanılır.
+        # Çıktı örneğinde "Comission Rate" olarak yazılmıştı, "Commission Rate" olarak düzeltildi.
+        print(f"Commission Rate: {self.get_commission_rate()}")
+        print(f"Gross Sales: {self.get_gross_sales()}")
+
+    def earnings(self):  # Kazancı hesaplayan ve yazdıran metot.
+        """
+        Kazancı hesaplar ve yazdırır.
+        Kazanç = komisyon_oranı * brüt_satışlar [cite: 9]
+        earnings metodunda komisyon_oranı ve brüt_satışları almak için erişimci metotları kullanın[cite: 9].
+        """
+        # Kazancı hesaplarken get_ metotları kullanılır.
+        calculated_earnings = self.get_commission_rate() * self.get_gross_sales()
+        print(f"Earnings: {calculated_earnings}")
+        return calculated_earnings  # Hesaplanan kazancı döndürür (alt sınıfta kullanılabilir).
+
+class BasePlusCommissionEmployee(CommissionEmployee):  # BasePlusCommissionEmployee, CommissionEmployee'dan miras alır.
+    """
+    Taban maaş artı komisyonla kazanç sağlayan bir çalışanı temsil eder.
+    Bu sınıf CommissionEmployee sınıfının alt sınıfı olacaktır[cite: 10].
+    BasePlusCommissionEmployee sınıfının bir adet özel özelliği (base_salary) olacaktır[cite: 10].
+    Sınıfın uygun __init__, erişimci ve değiştirici metotları olmalıdır[cite: 11].
+    """
+    def __init__(self, firstName, lastName, commission_rate, gross_sales, base_salary):  # Yapıcı metot.
+        # CommissionEmployee'nin yapıcı metodunu çağırır.
+        super().__init__(firstName, lastName, commission_rate, gross_sales)
+        self.__base_salary = base_salary  # Taban maaşı saklar.
+
+    # Erişimci metot
+    def get_base_salary(self):  # Taban maaşı döndürür.
+        return self.__base_salary
+
+    # Değiştirici metot
+    def set_base_salary(self, base_salary):  # Taban maaşı ayarlar.
+        self.__base_salary = base_salary
+
+    def print_employee(self):  # Taban maaşlı komisyonlu çalışan bilgilerini yazdıran metot.
+        """
+        Taban maaşlı komisyonlu çalışanın veri özelliklerini yazdırır.
+        print_employee metodunda, CommissionEmployee sınıfının print_employee metodunu çağırın[cite: 12].
+        Ardından, BasePlusCommissionEmployee sınıfının veri özelliğini yazdırın[cite: 12].
+        print_employee metodunda erişimci metotları kullanın[cite: 12].
+        """
+        super().print_employee()  # CommissionEmployee'nin print_employee metodunu çağırır.
+        # Taban maaşı yazdırırken get_ metodu kullanılır.
+        print(f"Base Salary: {self.get_base_salary()}")
+
+    def earnings(self):  # Kazancı hesaplayan ve yazdıran metot.
+        """
+        Kazancı hesaplar ve yazdırır.
+        Kazanç = taban_maaş + (komisyon_oranı * brüt_satışlar) [cite: 13]
+        earnings metodunda taban_maaşı almak için erişimci metodu kullanın[cite: 13].
+        Ayrıca, CommissionEmployee sınıfının earnings metodunu kullanın[cite: 14].
+        (Bu, CommissionEmployee'nin earnings metodundaki hesaplama mantığının kullanılması olarak yorumlandı)
+        """
+        # Komisyon kazancını CommissionEmployee'deki mantıkla hesaplar.
+        commission_earnings = self.get_commission_rate() * self.get_gross_sales()
+        # Toplam kazancı hesaplarken get_base_salary ve yukarıdaki komisyon kazancı kullanılır.
+        total_earnings = self.get_base_salary() + commission_earnings
+        print(f"Earnings: {total_earnings}")
+        return total_earnings
