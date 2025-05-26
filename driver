@@ -1,0 +1,23 @@
+
+import employees # employees.py dosyasını (modülünü) içe aktarır.
+
+def main(): # Ana fonksiyon tanımlanıyor.
+    # Employee sınıfından bir nesne oluşturuluyor.
+    my_employee = employees.Employee("John", "Smith") # [cite: 6]
+    my_employee.print_employee() # Çalışan bilgilerini yazdırır. [cite: 7]
+    print() # Çıktıda boşluk bırakmak için.
+
+    # CommissionEmployee sınıfından bir nesne oluşturuluyor.
+    my_comm_employee = employees.CommissionEmployee("Sue", "Jones", 10000, 0.6) # [cite: 9]
+    my_comm_employee.print_employee() # Komisyonlu çalışan bilgilerini yazdırır. [cite: 10]
+    my_comm_employee.earnings() # Komisyonlu çalışanın kazancını hesaplar ve yazdırır. [cite: 11]
+    print() # Çıktıda boşluk bırakmak için.
+
+    # BasePlusCommissionEmployee nesnesi oluşturulmadan önce çağrılan metotlar hataya yol açardı.
+    # Mantıksal akışa ve önceki çalışan testlerinin yapısına uygun olması için nesne oluşturma ve metot çağırma sırası düzeltildi.
+    # BasePlusCommissionEmployee sınıfından bir nesne oluşturuluyor.
+    my_base_comm_employee = employees.BasePlusCommissionEmployee("Bob", "Lewis", 5000, 0.4, 300) # [cite: 14]
+    my_base_comm_employee.print_employee() # Taban maaşlı komisyonlu çalışan bilgilerini yazdırır. [cite: 13]
+    my_base_comm_employee.earnings() # Taban maaşlı komisyonlu çalışanın kazancını hesaplar ve yazdırır. [cite: 15]
+
+main() # Ana fonksiyonu çağırır.
